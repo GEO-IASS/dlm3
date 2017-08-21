@@ -1,14 +1,5 @@
 FROM andrewssobral/dlm3
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-        build-essential \
-        wget \
-        git \
-        unzip \
-        && \
-        apt-get clean && \
-        rm -rf /var/lib/apt/lists/*
-
 WORKDIR /root
 
 RUN git clone https://github.com/andrewssobral/darknet.git
