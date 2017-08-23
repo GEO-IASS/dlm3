@@ -11,3 +11,5 @@ RUN make
 RUN wget https://pjreddie.com/media/files/yolo.weights
 
 RUN ./darknet detect cfg/yolo.cfg yolo.weights data/dog.jpg
+
+WORKDIR /root
