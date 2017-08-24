@@ -38,8 +38,6 @@ RUN conda install -y scikit-image
 RUN pip install visdom
 RUN conda install -y pytorch torchvision -c soumith
 
-# Build OpenCV
-
 # Download OpenCV 3.3.0
 RUN cd ~ && \ 
     wget https://github.com/Itseez/opencv/archive/3.3.0.zip && \
@@ -110,3 +108,36 @@ RUN rm -rf ~/opencv/build && \
     rm -rf ~/opencv_contrib/doc
 
 WORKDIR /root
+
+# Download Boost C++ 1.65.0
+RUN wget https://dl.bintray.com/boostorg/release/1.65.0/source/boost_1_65_0.zip && \
+    unzip boost_1_65_0.zip && \
+    rm -r boost_1_65_0.zip && \
+    mv boost_1_65_0/ boost
+
+# Build and install Boost
+# ./bootstrap.sh --with-libraries=python
+RUN cd ~/boost && \
+    ./bootstrap.sh && \
+    sed -i 's+/opt/conda+/opt/conda : /opt/conda/include/python3.6m : /opt/conda/lib+g' project-config.jam && \
+    ./b2 --with=all && \
+    ./b2 install && \
+    /bin/bash -c 'echo "/usr/local/lib" > /etc/ld.so.conf.d/boost.conf' && \
+    ldconfig && \
+    export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+
+WORKDIR /root
+
+# Download Dlib 19.4
+#RUN git clone https://github.com/davisking/dlib.git
+RUN wget http://dlib.net/files/dlib-19.4.tar.bz2 && \
+    tar -jxvf dlib-19.4.tar.bz2 && \
+    rm -r dlib-19.4.tar.bz2 && \
+    mv dlib-19.4/ dlib
+
+# Build and install Dlib
+RUN cd ~/dlib && \
+    sed -i 's+set(_PYTHON3_VERSIONS 3.4 3.3 3.2 3.1 3.0)+set(_PYTHON3_VERSIONS 3.6 3.5 3.4 3.3 3.2 3.1 3.0)+g' /usr/share/cmake-3.0/Modules/FindPythonInterp.cmake && \
+    sed -i 's+set(_PYTHON3_VERSIONS 3.4 3.3 3.2 3.1 3.0)+set(_PYTHON3_VERSIONS 3.6 3.5 3.4 3.3 3.2 3.1 3.0)+g' /usr/share/cmake-3.0/Modules/FindPythonLibs.cmake && \
+    python setup.py install --yes USE_AVX_INSTRUCTIONS && \
+    python -c 'import dlib; print(dlib.__version__)'
