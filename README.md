@@ -34,7 +34,7 @@ Provided libraries:
 
 * Boost C++ 1.65.0
 
-* Dlib 19.4
+* Dlib 19.4 + python wrapper
 
 Not included:
 
