@@ -10,6 +10,12 @@ Docker pull commands:
 
 * docker pull andrewssobral/dlm3:yolo
 
+Docker files:
+
+* https://github.com/andrewssobral/dlm3
+
+* https://github.com/andrewssobral/dlm3/tree/master/yolo
+
 Provided libraries:
 
 * Miniconda 4.3.24 + Python 3.6.0
