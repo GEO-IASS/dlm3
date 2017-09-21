@@ -141,3 +141,12 @@ RUN cd ~/dlib && \
     sed -i 's+set(_PYTHON3_VERSIONS 3.4 3.3 3.2 3.1 3.0)+set(_PYTHON3_VERSIONS 3.6 3.5 3.4 3.3 3.2 3.1 3.0)+g' /usr/share/cmake-3.0/Modules/FindPythonLibs.cmake && \
     python setup.py install --yes USE_AVX_INSTRUCTIONS && \
     python -c 'import dlib; print(dlib.__version__)'
+
+# Build and install YOLO
+RUN cd ~ && git clone https://github.com/andrewssobral/darknet.git
+WORKDIR /root/darknet
+RUN make
+RUN wget https://pjreddie.com/media/files/yolo.weights
+RUN ./darknet detect cfg/yolo.cfg yolo.weights data/dog.jpg
+
+WORKDIR /root
