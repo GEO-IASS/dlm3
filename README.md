@@ -8,8 +8,6 @@ Docker pull commands:
 
 * docker pull andrewssobral/dlm3
 
-* docker pull andrewssobral/dlm3:yolo
-
 Docker files:
 
 * https://github.com/andrewssobral/dlm3
@@ -35,6 +33,8 @@ Provided libraries:
 * Boost C++ 1.65.0
 
 * Dlib 19.4 + python wrapper
+
+* YOLO v2
 
 Not included:
 
