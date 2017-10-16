@@ -77,7 +77,7 @@ RUN cd ~/opencv && \
         -D INSTALL_PYTHON_EXAMPLES=ON \
 	-D WITH_IPP=OFF \
 	-D WITH_TBB=ON \
-        -D ENABLE_AVX=OFF \
+        -D ENABLE_AVX=ON \
         -D WITH_CUDA=OFF \
         -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules \
 	-D PYTHON_EXECUTABLE=$(which python3) \
